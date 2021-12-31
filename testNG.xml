@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite1" verbose="1" parallel="classes">
+    <test name="Regression1"     >
+        <!--<packages>
+            <package name="com.freshflows.tests" />
+        </packages>
+    -->
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.freshflows.tests.TestCase01" />
+            <class name="com.freshflows.tests.TestCase02" />
+        </classes>
+
+    </test>
+</suite>

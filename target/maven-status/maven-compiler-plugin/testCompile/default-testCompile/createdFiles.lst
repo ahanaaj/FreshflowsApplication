@@ -1,0 +1,10 @@
+com\freshflows\tests\TestCase01.class
+com\freshflows\objects\functions.class
+com\freshflows\utils\ConfigLoader.class
+com\freshflows\pages\homePage.class
+com\freshflows\utils\PropertyUtils.class
+com\freshflows\utils\Jacksonutil.class
+com\freshflows\pages\LoginPage.class
+com\freshflows\pom\BaseTest.class
+com\freshflows\pom\BasePage.class
+com\freshflows\pages\MainPage.class
