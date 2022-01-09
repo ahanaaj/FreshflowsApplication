@@ -62,6 +62,7 @@ this.driver.set(driver);
         getDriver().manage().window().maximize();
         getDriver().get(ConfigLoader.getInstance().getBaseUrl());
 
+
     }
     @Description ("This method captures screenshot on failure and quits the driver")
     @AfterMethod()

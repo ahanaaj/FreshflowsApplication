@@ -8,8 +8,6 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import com.freshflows.pom.BasePage;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class LoginPage extends BasePage {
@@ -33,7 +31,8 @@ public class LoginPage extends BasePage {
     private final By chooseAccount = By.xpath("//div[@data-email='ahanaa.j@american-technology.net']");
     private final By forgotpswd = By.xpath("//a[contains(text(), 'Forgot Password?')]");
     private final By workspace = By.xpath("//a[contains(text(), 'Workspace')]");
-
+    private final By mailErrorMsg = By.xpath("//span[contains(text(), 'must be a valid email')]");
+    private final By pswdErrorMsg  = By.xpath("//span[contains(text(), 'length must be at least 8 characters long')]");
 
 
     public LoginPage enterUsermail(String mail)  {
@@ -57,28 +56,42 @@ public class LoginPage extends BasePage {
         return this;
         }
 
-    public LoginPage enterOrgName(String org){
+    /*public LoginPage enterOrgName(String org){
         driver.findElement(orgName).sendKeys(org);
         return this;
-    }
+    }*/
 
     public LoginPage googleSignInUser(String gSignInUser){
         driver.findElement(googleSignInUser).sendKeys(gSignInUser);
         return this;
     }
 
+    public LoginPage reademailErrorMsg()  {
+        driver.findElement(mailErrorMsg).getText();
+        return this;
+    }
+
+    public LoginPage readpswdErrorMsg()  {
+
+        driver.findElement(pswdErrorMsg).getText();
+        return this;
+
+    }
+
     String url;
     @Step
     @Description("Log into the application")
     @Test
-    public LoginPage setlogin(){
+    public LoginPage setlogin() throws InterruptedException {
           getElement(usermail);
           enterUsermail(ConfigLoader.getInstance().getUsername());
           enterPassword(ConfigLoader.getInstance().getPassword());
           clickSubmit();
           getElement(newOrg);
           clickNewOrg();
-          enterOrgName(ConfigLoader.getInstance().getorgName());
+          getElement(orgName);
+          driver.findElement(orgName).sendKeys(ConfigLoader.getInstance().getorgName());
+          getElement(nextbtn);
           driver.findElement(nextbtn).click();
           getElement(skip);
           driver.findElement(skip).click();
@@ -87,21 +100,7 @@ public class LoginPage extends BasePage {
           getElement(workspace);
           url = driver.getCurrentUrl();
           System.out.println(url);
-
-
-
-      /*
-          Assert.assertTrue(driver.getTitle().equals("Freshflows.io"));
-
-          if(url.contains(ConfigLoader.getInstance().getorgName()))
-          {
-              Assert.assertTrue(url.contains(ConfigLoader.getInstance().getorgName()));
-          }
-          else {
-              Assert.fail("URL does not contain organization name");
-          }
-  */
-        return this;
+          return this;
     }
 
     @Description("Login in with an existing account")
@@ -127,31 +126,69 @@ public class LoginPage extends BasePage {
         return this;
     }
 
-   /* public LoginPage forgotPassword(){
+    String errorMail;
+    @Description("Verify log in error messages")
+    @Test
+    public LoginPage invalidCreds(functions fn){
+    //wait and enter email
+    getElement(usermail);
+    enterUsermail(fn.getShortEmail());
+    //enter password
+    enterPassword(fn.getShortPassword());
+    //click submit
+    clickSubmit();
+    getElement(mailErrorMsg);
+    errorMail = driver.findElement(mailErrorMsg).getText();
+    System.out.println("print error message" +errorMail);
+    return this;
+}
+
+public LoginPage invalidPassword(functions fn){
+    getElement(usermail);
+    enterUsermail(fn.getShortEmail());
+    enterPassword(fn.getLongPassword());
+    clickSubmit();
+    return this;
+}
+
+/*
+@DataProvider(name = "getCredentials")
+public dataList[] getCredentials() throws IOException {
+return Jacksonutil.fnJson("dataList.json", dataList[].class);
+
+}*/
+  /*
+          Assert.assertTrue(driver.getTitle().equals("Freshflows.io"));
+
+          if(url.contains(ConfigLoader.getInstance().getorgName()))
+          {
+              Assert.assertTrue(url.contains(ConfigLoader.getInstance().getorgName()));
+          }
+          else {
+              Assert.fail("URL does not contain organization name");
+          }
+  */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /* public LoginPage forgotPassword(){
 
         getElement(gLogin);
         driver.findElement(forgotpswd).click();
         return this;
     }
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*public LoginPage login() throws InterruptedException {
 

@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 @Epic("Epic 1")
-@Feature("backlog")
+@Feature("Login")
 public class TestCase02 extends BaseTest {
 
     @Story("Create a new wall ")

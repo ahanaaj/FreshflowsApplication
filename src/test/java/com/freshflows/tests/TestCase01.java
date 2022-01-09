@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 @Epic("Epic 1")
-@Feature("backlog")
+@Feature("Login")
 public class TestCase01 extends BaseTest {
 
     @Story("User Login ")
@@ -25,7 +25,8 @@ public class TestCase01 extends BaseTest {
     functions fn = Jacksonutil.fnJson("datafile.json",functions.class);
     LoginPage loginPage = new LoginPage(getDriver());
     loginPage.setlogin();
-    //Assert.assertTrue(driver.getTitle().equals("Freshflows.io"));
+    Assert.assertTrue(getDriver().getTitle().equals("Freshflows.io"));
+
 
 
 

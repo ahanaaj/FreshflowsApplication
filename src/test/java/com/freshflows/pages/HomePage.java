@@ -11,7 +11,7 @@ public class HomePage extends BasePage {
     public HomePage(WebDriver driver) {
         super(driver);
     }
-     private final By plusIcon = By.xpath("(//div[@class='truncate align-middle cursor-pointer '])[1]/div[1]/div[2]");
+     private final By plusIcon = By.xpath("//div[@class='px-2.5 add-workspace mt-7 flex justify-between items-center parent']//div[2]//*[name()='svg']");
      private final By workspace = By.xpath("//a[contains(text(), 'Workspace')]");
      private final By enterWSName = By.xpath("//div[@class='ml-6 flex flex-col']/input");
      private final By createWorkspace = By.xpath("//span[contains(text(), 'Create Workspace')]");
@@ -23,8 +23,8 @@ public class HomePage extends BasePage {
      @Step
      @Description("Create a nThis method launches the browser and the URLew workspace and a new wall")
     public HomePage workspace(functions fn) throws InterruptedException {
-       // getElement(workspaces);
-        Thread.sleep(4000);
+        // getElement(workspaces);
+        Thread.sleep(6000);
         driver.findElement(plusIcon).click();
         getElement(enterWSName);
         driver.findElement(enterWSName).sendKeys(fn.getWorkspaceName());

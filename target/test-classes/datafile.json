@@ -1,4 +1,15 @@
 {
-  "workspaceName" : "freshflo",
-  "passd" : "Whitecollar30!"
+  "workspaceName" : "workSpacSpaco",
+  "passd" : "Whitecollar30!",
+  "shortEmail" : "test",
+  "mail" : "ahanaa.j@american-technology.net",
+  "shortPassword" : "fail",
+  "shortPswdErrorMsg" : "length must be at least 8 characters long",
+  "shortEmailErrorMsg" : "must be a valid email",
+
+  "invalidEmail" : "t",
+  "longPassword" : "testingqapswd",
+  "validEmail" : "testing@gmail.com",
+  "validPswd" : "testingqa"
+
 }

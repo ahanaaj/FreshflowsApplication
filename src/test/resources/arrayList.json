@@ -1,7 +1,21 @@
 [
   {
-    "id" : 657 ,
-    "name" : "bjbk"
+    "mail" : "testqa" ,
+    "password" : "fail"
 
+  },
+  {
+    "mail" :"testingqa@gmail.com"  ,
+    "password" : "failqa"
+
+  },
+  {
+    "mail" : "t" ,
+    "password" : "fail"
+
+  },
+  {
+    "mail" :"testingqa@gmail.com"  ,
+    "password" : "testcasepassword"
   }
 ]
