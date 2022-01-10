@@ -33,6 +33,8 @@ public class LoginPage extends BasePage {
     private final By workspace = By.xpath("//a[contains(text(), 'Workspace')]");
     private final By mailErrorMsg = By.xpath("//span[contains(text(), 'must be a valid email')]");
     private final By pswdErrorMsg  = By.xpath("//span[contains(text(), 'length must be at least 8 characters long')]");
+    private final By signUp = By.xpath("//a[contains(text(), 'Sign Up')]");
+
 
 
     public LoginPage enterUsermail(String mail)  {
@@ -149,6 +151,17 @@ public LoginPage invalidPassword(functions fn){
     enterPassword(fn.getLongPassword());
     clickSubmit();
     return this;
+}
+
+
+
+public LoginPage signUP(){
+        getElement(signUp);
+        driver.findElement(signUp).click();
+        //enter work mail
+
+        return this;
+
 }
 
 /*

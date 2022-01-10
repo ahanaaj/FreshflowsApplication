@@ -9,7 +9,7 @@
     -->
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="com.freshflows.tests.TestCase01" />
+            <class name="com.freshflows.tests.Login.LoginTests" />
             <class name="com.freshflows.tests.TestCase02" />
         </classes>
 
