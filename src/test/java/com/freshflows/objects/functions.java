@@ -13,8 +13,37 @@ public class functions  {
         return this;
     }
 
+    private String verificationMail;
+
+    public String getVerificationMail() {
+        return verificationMail;
+    }
+
+    public void setVerificationMail(String verificationMail) {
+        this.verificationMail = verificationMail;
+    }
 
     private String password;
+    private String shortEmail;
+    private String shortPassword;
+    private String invalidEmail;
+    private String longPassword;
+    private String validEmail;
+    private String validPswd;
+    private String shortPswdErrorMsg;
+    private String shortEmailErrorMsg;
+    private String passd;
+
+    public String getVerificationMailSent() {
+        return verificationMailSent;
+    }
+
+    public void setVerificationMailSent(String verificationMailSent) {
+        this.verificationMailSent = verificationMailSent;
+    }
+
+    private String verificationMailSent;
+
     public String getPassword() {
         return password;
     }
@@ -22,7 +51,6 @@ public class functions  {
         this.password = password;
     }
 
-    private String shortEmail;
     public String getShortEmail() {
         return shortEmail;
     }
@@ -30,7 +58,6 @@ public class functions  {
     public void setShortEmail(String shortEmail) {
         this.shortEmail = shortEmail;
     }
-    private String shortPassword;
     public String getShortPassword() {
         return shortPassword;
     }
@@ -38,7 +65,6 @@ public class functions  {
         this.shortPassword = shortPassword;
     }
 
-    private String invalidEmail;
     public String getInvalidEmail() {
         return invalidEmail;
     }
@@ -46,7 +72,6 @@ public class functions  {
         this.invalidEmail = invalidEmail;
     }
 
-    private String longPassword;
     public String getLongPassword() {
         return longPassword;
     }
@@ -54,7 +79,6 @@ public class functions  {
         this.longPassword = longPassword;
     }
 
-    private String validEmail;
     public String getValidEmail() {
         return validEmail;
     }
@@ -62,7 +86,6 @@ public class functions  {
         this.validEmail = validEmail;
     }
 
-    private String validPswd;
     public String getValidPswd() {
         return validPswd;
     }
@@ -70,7 +93,6 @@ public class functions  {
         this.validPswd = validPswd;
     }
 
-    private String shortPswdErrorMsg;
     public String getShortPswdErrorMsg() {
         return shortPswdErrorMsg;
     }
@@ -78,7 +100,6 @@ public class functions  {
         this.shortPswdErrorMsg = shortPswdErrorMsg;
     }
 
-    private String shortEmailErrorMsg;
     public String getShortEmailErrorMsg() {
         return shortEmailErrorMsg;
     }
@@ -93,7 +114,6 @@ public class functions  {
     }
 
 
-    private String passd;
     public String getPassd() {
         return password;
     }

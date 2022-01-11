@@ -8,6 +8,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -23,7 +24,6 @@ public class LoginTests extends BaseTest {
         try {
             functions fn = Jacksonutil.fnJson("datafile.json", functions.class);
             LoginPage loginPage = new LoginPage(getDriver());
-
             loginPage.setlogin();
             Assert.assertTrue(getDriver().getTitle().equals("Freshflows.io"));
         } catch (Exception e) {
@@ -38,11 +38,13 @@ public class LoginTests extends BaseTest {
         try {
             functions fn = Jacksonutil.fnJson("datafile.json", functions.class);
             LoginPage loginPage = new LoginPage(getDriver());
-            loginPage.setlogin();
-            Assert.assertTrue(getDriver().getTitle().equals("Freshflows.io"));
-        } catch (Exception e) {
-            e.printStackTrace();
+            loginPage.signUP(fn);
+            Assert.assertTrue(loginPage.textOutput.equals(fn.getVerificationMailSent()));
 
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
         }
 
     }

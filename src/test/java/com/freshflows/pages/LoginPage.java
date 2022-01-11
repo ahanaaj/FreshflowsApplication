@@ -5,10 +5,12 @@ import com.freshflows.utils.ConfigLoader;
 //import jdk.internal.jline.internal.Log;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import com.freshflows.pom.BasePage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 public class LoginPage extends BasePage {
 
@@ -34,7 +36,12 @@ public class LoginPage extends BasePage {
     private final By mailErrorMsg = By.xpath("//span[contains(text(), 'must be a valid email')]");
     private final By pswdErrorMsg  = By.xpath("//span[contains(text(), 'length must be at least 8 characters long')]");
     private final By signUp = By.xpath("//a[contains(text(), 'Sign Up')]");
-
+    private final By verificationMailMessage = By.xpath("//div[@class='flex flex-col items-center']//div[1]");
+    private final By signUpBtn = By.xpath("//span[contains(text(), 'Sign Up')]");
+    private final By mailinator = By.xpath("(//a[@title='Mailinator-Millions of Inboxes. All yours.'])[1]");
+    private final By mailinatormail = By.xpath("(//input[@type='text'])[1]");
+    private final By mailinatorGO = By.xpath("//button[contains(text(), 'GO')]");
+    private final By mailinatorFrom = By.xpath("//td[contains(text(), 'From')]");
 
 
     public LoginPage enterUsermail(String mail)  {
@@ -154,73 +161,36 @@ public LoginPage invalidPassword(functions fn){
 }
 
 
-
-public LoginPage signUP(){
+    public String textOutput;
+    public LoginPage signUP(functions fn) throws InterruptedException {
         getElement(signUp);
         driver.findElement(signUp).click();
         //enter work mail
-
-        return this;
-
-}
-
-/*
-@DataProvider(name = "getCredentials")
-public dataList[] getCredentials() throws IOException {
-return Jacksonutil.fnJson("dataList.json", dataList[].class);
-
-}*/
-  /*
-          Assert.assertTrue(driver.getTitle().equals("Freshflows.io"));
-
-          if(url.contains(ConfigLoader.getInstance().getorgName()))
-          {
-              Assert.assertTrue(url.contains(ConfigLoader.getInstance().getorgName()));
-          }
-          else {
-              Assert.fail("URL does not contain organization name");
-          }
-  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- /* public LoginPage forgotPassword(){
-
         getElement(gLogin);
-        driver.findElement(forgotpswd).click();
-        return this;
-    }
-*/
+        driver.findElement(usermail).sendKeys(fn.getVerificationMail());
+        driver.findElement(signUpBtn).click();
+        Thread.sleep(3000);
+        System.out.println("before fail");
+        Thread.sleep(3000);
+        List<WebElement> trList = driver.findElements(By.xpath("//*[@id=\"root\"]/div[1]/div[3]/div/div/div/div"));
+        for(int i=0;i<trList.size();i++)
+        {
+            if(trList.get(i).getText().contains("verification mail has been sent"))
+                {
+            WebElement te = driver.findElement(By.xpath("(//*[@id=\"root\"]/div[1]/div[3]/div/div/div/div)[\" + i + \"]"));
+            textOutput = te.getText();
+            System.out.println("verification mail message:::" + te.getText());
+            System.out.println(textOutput);
+            break;
+            }
+        }
+        driver.switchTo().newWindow(WindowType.TAB);
+        driver.get(ConfigLoader.getInstance().getgmail());
+        getElement(mailinator);
+        driver.findElement(mailinatormail).sendKeys(ConfigLoader.getInstance().getmailinatorID());
+        driver.findElement(mailinatorGO).click();
+        getElement(mailinatorFrom);
 
-/*public LoginPage login() throws InterruptedException {
-
-        Thread.sleep(5000);
-        System.out.println("wait time is loaded");
-        driver.findElement(usermail).sendKeys("ahanaa.j@american-technology.net");
-        System.out.println("mail is entered");
-        Thread.sleep(5000);
-        driver.findElement(password).sendKeys("Whitecollar30!");
-        Thread.sleep(5000);
-        driver.findElement(submit).click();
-      //  Assert.assertEquals(getTitle(), "Freshflows.io");
-        Thread.sleep(5000);
         return this;
 }
-*//*
-    public LoginPage setfunctions(functions fn){
-        return enterUsermail(fn.getMail()).
-               enterPassword(fn.getPassd())
-                .clickSubmit();
-    }*/
 }

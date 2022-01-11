@@ -10,6 +10,8 @@
   "invalidEmail" : "t",
   "longPassword" : "testingqapswd",
   "validEmail" : "testing@gmail.com",
-  "validPswd" : "testingqa"
+  "validPswd" : "testingqa",
+  "verificationMailSent" : "verification mail has been sent",
+  "verificationMail" : "testingqa@mailinator.com"
 
 }

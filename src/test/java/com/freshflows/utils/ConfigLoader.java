@@ -42,4 +42,16 @@ public class ConfigLoader   {
         if(prop != null)  return prop;
         else throw new RuntimeException("property organization is not specified in the config.properties file");
     }
+
+    public String getgmail(){
+        String prop = properties.getProperty("gmail");
+        if(prop != null)  return prop;
+        else throw new RuntimeException("property gmail is not specified in the config.properties file");
+
+    }
+    public String getmailinatorID(){
+        String prop = properties.getProperty("mailinatorID");
+        if(prop != null)  return prop;
+        else throw new RuntimeException("property mailinatorID is not specified in the config.properties file");
+    }
 }

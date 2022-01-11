@@ -21,12 +21,17 @@ public class TestCase05 extends BaseTest {
     @Description("This is to verify if the organization name is captured in the URL ")
     @Test
     public void errorLogin() throws InterruptedException, IOException {
-        functions fn = Jacksonutil.fnJson("datafile.json", functions.class);
-        LoginPage loginPage = new LoginPage(getDriver());
-        loginPage.invalidCreds(fn);
-        System.out.println(loginPage.reademailErrorMsg());
-        Assert.assertTrue(loginPage.reademailErrorMsg().equals(fn.getShortEmailErrorMsg()));
-        Assert.assertTrue(loginPage.readpswdErrorMsg().equals(fn.getShortPswdErrorMsg()));
+        try {
+            functions fn = Jacksonutil.fnJson("datafile.json", functions.class);
+            LoginPage loginPage = new LoginPage(getDriver());
+            loginPage.signUP(fn);
+            Assert.assertTrue(loginPage.textOutput.equals(fn.getVerificationMailSent()));
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }
     /*@Test
     public void errorMsgLogin() throws InterruptedException, IOException {
