@@ -33,6 +33,36 @@ public class functions  {
     private String shortPswdErrorMsg;
     private String shortEmailErrorMsg;
     private String passd;
+    private String organization_confirmMail;
+
+    public String getOrganization_confirmMail() {
+        return organization_confirmMail;
+    }
+
+    public void setOrganization_confirmMail(String organization_confirmMail) {
+        this.organization_confirmMail = organization_confirmMail;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
+    private String domain;
+
+
+    public String getForgotPswdMail() {
+        return forgotPswdMail;
+    }
+
+    public void setForgotPswdMail(String forgotPswdMail) {
+        this.forgotPswdMail = forgotPswdMail;
+    }
+
+    private String forgotPswdMail;
 
     public String getVerificationMailSent() {
         return verificationMailSent;

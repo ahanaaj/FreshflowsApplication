@@ -9,6 +9,7 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -20,7 +21,21 @@ public class LoginTests extends BaseTest {
     @Story("User Login ")
     @Description("This is to verify if the organization name is captured in the URL ")
     @Test(description = "Login with workmail method")
-    public void login() throws InterruptedException, IOException {
+    public void sign_up_using_invalid_email_format() throws InterruptedException, IOException {
+        functions fn = Jacksonutil.fnJson("datafile.json", functions.class);
+        LoginPage loginPage = new LoginPage(getDriver());
+        try {
+            loginPage.invalidCreds(fn);
+            Assert.assertTrue(loginPage.reademailErrorMsg().equals(fn.getShortEmailErrorMsg()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.assertFalse(loginPage.readpswdErrorMsg().equals(fn.getShortPswdErrorMsg()));
+
+        }
+    }
+
+    @Test(description = "Login with workmail method")
+    public void sign_up_using_valid_email_format() throws InterruptedException, IOException {
         try {
             functions fn = Jacksonutil.fnJson("datafile.json", functions.class);
             LoginPage loginPage = new LoginPage(getDriver());
@@ -28,19 +43,17 @@ public class LoginTests extends BaseTest {
             Assert.assertTrue(getDriver().getTitle().equals("Freshflows.io"));
         } catch (Exception e) {
             e.printStackTrace();
-
         }
     }
     @Story("User Login ")
     @Description("This is to verify if the organization name is captured in the URL ")
     @Test(description = "Login with workmail method")
-    public void Verify_login_with_valid_credentials() throws InterruptedException, IOException {
+    public void Signup_using_already_existing_google_account() throws InterruptedException, IOException {
         try {
             functions fn = Jacksonutil.fnJson("datafile.json", functions.class);
             LoginPage loginPage = new LoginPage(getDriver());
             loginPage.signUP(fn);
             Assert.assertTrue(loginPage.textOutput.equals(fn.getVerificationMailSent()));
-
         }
         catch(Exception e)
         {
@@ -49,52 +62,47 @@ public class LoginTests extends BaseTest {
 
     }
 
+    @Story("User Login ")
+    @Description("This is to verify if the organization name is captured in the URL ")
+    @Test(description = "Login with workmail method")
+    public void Reset_password_by_providing_valid() throws InterruptedException, IOException {
+        LoginPage loginPage = new LoginPage(getDriver());
+        functions fn = Jacksonutil.fnJson("datafile.json", functions.class);
+        try {
+            loginPage.forgotpswd(fn);
+            Assert.assertTrue(getDriver().findElement(By.xpath("//div[contains(text(), 'Reset Link Sent')]")).isDisplayed());
+     }
+        catch(Exception e)
+        {
+            Assert.fail("Reset link title is not seen");
+            e.printStackTrace();
+        }
+        try{
+            loginPage.goToMailinator(fn);
+            Assert.assertTrue(getDriver().findElement(By.xpath("//a[@title='Confirm Mail']")).isDisplayed());
+        }
+        catch (Exception e){
+            Assert.fail("confirm mail not clicked");
+            e.printStackTrace();
+}
+    }
 
+    @Test(description = "Resend the verification link")
+    public void Resend_the_verification_link() throws InterruptedException, IOException {
+        functions fn = Jacksonutil.fnJson("datafile.json", functions.class);
+        LoginPage loginPage = new LoginPage(getDriver());
+        try {
+            loginPage.signUP(fn);
+            loginPage.goToMailinator(fn);
+            loginPage.setYourPswd(fn);
+            Assert.assertTrue(getDriver().getTitle().equals("freshflows.io"));
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*homePage homePage = new homePage(driver);
-        homePage.pages("tyyyjkm");
-        Thread.sleep(5000);
-
-        MainPage mainPage = homePage.closePlayer();
-        mainPage.clickWs();
-*/
-
-
-
-
-
-
-
-
-
-
-//        functions func= Jacksonutil.json("datafile.json", functions.class );
-
-  //      functions fn = new functions("ahana", "psdd");
-        /*fn.setMail("jkk");
-        fn.setPassd("kjknk");*/
-
-
-
+    }
 
 
 }

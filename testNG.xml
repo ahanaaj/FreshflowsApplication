@@ -2,16 +2,13 @@
 
 <suite name="Suite1" verbose="1" >
     <test name="Regression1" >
-        <!--<packages>
-            <pac
-            kage name="com.freshflows.tests" />
-        </packages>
-    -->
         <parameter name="browser" value="chrome"/>
         <classes>
-
-            <class name="com.freshflows.tests.TestCase05" />
+            <class name="com.freshflows.tests.Workspace.WorkspaceTests" >
+            <methods>
+                <include name="Create_workspace_Idea_to_Launch"></include>
+            </methods>
+            </class>
         </classes>
-
     </test>
 </suite>

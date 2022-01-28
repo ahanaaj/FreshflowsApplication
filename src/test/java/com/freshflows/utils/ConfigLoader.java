@@ -43,10 +43,10 @@ public class ConfigLoader   {
         else throw new RuntimeException("property organization is not specified in the config.properties file");
     }
 
-    public String getgmail(){
-        String prop = properties.getProperty("gmail");
+    public String getmailinatorURL(){
+        String prop = properties.getProperty("mailinatorURL");
         if(prop != null)  return prop;
-        else throw new RuntimeException("property gmail is not specified in the config.properties file");
+        else throw new RuntimeException("property mailinator URL is not specified in the config.properties file");
 
     }
     public String getmailinatorID(){

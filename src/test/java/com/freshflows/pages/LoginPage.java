@@ -7,10 +7,12 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import com.freshflows.pom.BasePage;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.Set;
 
 public class LoginPage extends BasePage {
 
@@ -42,7 +44,14 @@ public class LoginPage extends BasePage {
     private final By mailinatormail = By.xpath("(//input[@type='text'])[1]");
     private final By mailinatorGO = By.xpath("//button[contains(text(), 'GO')]");
     private final By mailinatorFrom = By.xpath("//td[contains(text(), 'From')]");
-
+    private final By mailinatorfirstmail = By.xpath("(//td[contains(text(), 'Verify your email address')])[1]");
+    private final By confirmMail = By.xpath("//*[@id=\"templateBody\"]/table[2]/tbody/tr/td/table/tbody/tr/td/a");
+    private final By mailinatorframe = By.xpath("//iframe[@title='HTML Email Message Body'][1]");
+    private final By forgotPswd = By.xpath("//a[contains(text(), 'Forgot Password?')]");
+    private final By domain =By.xpath("//input[@name='domain']");
+    public final By resetLinkSent = By.xpath("//div[contains(text(), 'Reset Link Sent')]");
+    public final By orgNameTitle = By.xpath("//div[contains(text(), 'My organization name is')]");
+    public final By setYourPswd = By.xpath("//div[contains(text(), 'Set your password')]");
 
     public LoginPage enterUsermail(String mail)  {
 
@@ -151,17 +160,18 @@ public class LoginPage extends BasePage {
     System.out.println("print error message" +errorMail);
     return this;
 }
-
-public LoginPage invalidPassword(functions fn){
+    @Description("Verify log in using invalid passwords")
+    @Test
+    public LoginPage invalidPassword(functions fn){
     getElement(usermail);
     enterUsermail(fn.getShortEmail());
     enterPassword(fn.getLongPassword());
     clickSubmit();
     return this;
 }
-
-
     public String textOutput;
+    @Description("Verify log in error messages")
+    @Test
     public LoginPage signUP(functions fn) throws InterruptedException {
         getElement(signUp);
         driver.findElement(signUp).click();
@@ -184,13 +194,77 @@ public LoginPage invalidPassword(functions fn){
             break;
             }
         }
-        driver.switchTo().newWindow(WindowType.TAB);
-        driver.get(ConfigLoader.getInstance().getgmail());
-        getElement(mailinator);
-        driver.findElement(mailinatormail).sendKeys(ConfigLoader.getInstance().getmailinatorID());
-        driver.findElement(mailinatorGO).click();
-        getElement(mailinatorFrom);
-
         return this;
 }
+    String resetpswdTitle;
+@Test
+    public LoginPage forgotpswd(functions fn){
+        getElement(forgotPswd);
+        driver.findElement(forgotPswd).click();
+        getElement(usermail);
+        driver.findElement(usermail).sendKeys(fn.getForgotPswdMail());
+        driver.findElement(domain).sendKeys(fn.getDomain());
+        driver.findElement(submit).click();
+        getElement(resetLinkSent);
+        return this;
+}
+    @Test
+    public LoginPage goToMailinator(functions fn){
+        driver.switchTo().newWindow(WindowType.TAB);
+        driver.get(ConfigLoader.getInstance().getmailinatorURL());
+        getElement(mailinator);
+        driver.findElement(mailinatormail).sendKeys(fn.getVerificationMail());
+        driver.findElement(mailinatorGO).click();
+        getElement(mailinatorFrom);
+        getElement(mailinatorfirstmail);
+        driver.findElement(mailinatorfirstmail).click();
+        String mailinatorPg = driver.getTitle();
+        System.out.println("Get title of the mailinator:" +mailinatorPg);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,500)", "");
+
+        WebElement frame = driver.findElement(By.xpath("//div[@id='pills-html']//iframe"));
+        String frameName = frame.getText();
+        System.out.println("print frame name " +frameName);
+
+        driver.switchTo().frame("html_msg_body");
+        getElement(confirmMail);
+        driver.findElement(confirmMail).click();
+        return this;
+    }
+
+    @Description("Set your password in the new tab after clicking on confirm mail  ")
+    @Test
+    public LoginPage setYourPswd(functions fn) throws InterruptedException {
+    Thread.sleep(5000);
+        String parent=driver.getWindowHandle();
+        Set<String> Winhandles=driver.getWindowHandles();
+        for(String hndl: Winhandles)
+        {
+            Thread.sleep(5000);
+            if(!hndl.equalsIgnoreCase(parent))
+            {
+                driver.switchTo().window(hndl);
+                System.out.println("New Tab Window Title:" + driver.getTitle());
+            }
+        }
+    getElement(setYourPswd);
+    driver.findElement(setYourPswd).sendKeys(fn.getPassd());
+    driver.findElement(submit).click();
+    getElement(orgNameTitle);
+    return this;
+
+    }
+
+    @Test
+    public LoginPage signUp_Verificationmail_sent_Page(functions fn){
+        getElement(signUp);
+        driver.findElement(signUp).click();
+        //enter work mail
+        getElement(gLogin);
+        driver.findElement(usermail).sendKeys(fn.getVerificationMail());
+        driver.findElement(signUpBtn).click();
+
+        return this;
+    }
 }
